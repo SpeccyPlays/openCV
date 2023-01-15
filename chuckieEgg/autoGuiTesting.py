@@ -12,12 +12,13 @@ pyautogui.hotkey('win', 'd')
 #move mouse to Fuse icon and double click
 pyautogui.moveTo(200, 150, 0.5)
 pyautogui.doubleClick()
-time.sleep(10) # allow time for Fuse to open
+time.sleep(6) # allow time for Fuse to open
+fuseWindow = pyautogui.locateOnScreen('fuseWindow.PNG', confidence=0.8)#quicker searching later if only searching window
 pyautogui.press('f3')
-time.sleep(10)
+time.sleep(3)
 pyautogui.PAUSE = 5
 #find and open the right file
-mouseX, mouseY = pyautogui.locateCenterOnScreen('fileName.PNG', confidence=0.8)
+mouseX, mouseY = pyautogui.locateCenterOnScreen('fileName.PNG', region=fuseWindow, confidence=0.8)
 pyautogui.PAUSE = 0.5
 pyautogui.moveTo(mouseX, mouseY, 0.5)
 pyautogui.PAUSE = 15
@@ -28,13 +29,11 @@ pyautogui.PAUSE = 1
 pyautogui.keyDown('s')
 pyautogui.PAUSE = 5
 pyautogui.keyUp('s')
-print('S key pressed')
 pyautogui.PAUSE = 1
 pyautogui.keyDown('1')
 pyautogui.PAUSE = 4
 pyautogui.keyUp('1')
-print('1 key pressed')
-pyautogui.PAUSE = 1
+pyautogui.PAUSE = 0.5
 pyautogui.keyDown('m')
 pyautogui.keyUp('m')
 

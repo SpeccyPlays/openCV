@@ -1,5 +1,6 @@
 #automate opening of Fuse emulator
 import pyautogui
+import cv2 as cv
 import time
 #pause 2.5 seconds between commands
 pyautogui.PAUSE = 0.5
@@ -13,7 +14,7 @@ pyautogui.hotkey('win', 'd')
 pyautogui.moveTo(200, 150, 0.5)
 pyautogui.doubleClick()
 time.sleep(6) # allow time for Fuse to open
-fuseWindow = pyautogui.locateOnScreen('fuseWindow.PNG', confidence=0.8)#quicker searching later if only searching window
+fuseWindow = pyautogui.locateOnScreen('fuseWindow.PNG', confidence=0.9)#quicker searching later if only searching window
 pyautogui.press('f3')
 time.sleep(3)
 pyautogui.PAUSE = 5
@@ -36,5 +37,15 @@ pyautogui.keyUp('1')
 pyautogui.PAUSE = 0.5
 pyautogui.keyDown('m')
 pyautogui.keyUp('m')
+#find all the eggs on screen
+eggLocations = list(pyautogui.locateAllOnScreen('egg.PNG', region=fuseWindow, confidence=0.9))
+eggLocationsCenter = []
+for egg in eggLocations:
+    eggLocationsCenter.append(pyautogui.center(egg))
+print(eggLocationsCenter)
+#point to the eggs
+for location in eggLocationsCenter:
+    x, y = location
+    pyautogui.moveTo(x, y, 0.25)
 
 

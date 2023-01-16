@@ -1,4 +1,7 @@
-#automate opening of Fuse emulator
+#automate opening of Fuse emulator and starting game
+#messy code
+#it'll find and walk to the egg on the same level
+#Switching to openCV though to follow a normal approach
 import pyautogui
 import cv2 as cv
 import time
@@ -35,17 +38,32 @@ pyautogui.keyDown('1')
 pyautogui.PAUSE = 4
 pyautogui.keyUp('1')
 pyautogui.PAUSE = 0.5
-pyautogui.keyDown('m')
-pyautogui.keyUp('m')
 #find all the eggs on screen
 eggLocations = list(pyautogui.locateAllOnScreen('egg.PNG', region=fuseWindow, confidence=0.9))
+playerLocationX, playerLocationY = pyautogui.locateCenterOnScreen('player.PNG', region=fuseWindow, confidence=0.9)
 eggLocationsCenter = []
 for egg in eggLocations:
     eggLocationsCenter.append(pyautogui.center(egg))
-print(eggLocationsCenter)
 #point to the eggs
-for location in eggLocationsCenter:
-    x, y = location
-    pyautogui.moveTo(x, y, 0.25)
-
-
+#for location in eggLocationsCenter:
+#    x, y = location
+#    pyautogui.moveTo(x, y, 0.25)
+#point to the player
+#pyautogui.moveTo(playerLocationX, playerLocationY, 0.25)
+#
+###### MAIN PART of finding eggs####
+#Loop while there's eggs in the list
+while len(eggLocationsCenter) > 0:
+    for egg in eggLocationsCenter:
+        x, y = egg
+        if playerLocationY < y + 50 and playerLocationY > y - 50:
+            if x - playerLocationX < 0:
+                pyautogui.keyDown('9')
+                playerLocationX -= 32
+                print('Egg X : ', x)
+                print('player X :', playerLocationX)
+            #elif x - playerLocationX < 10 and x - playerLocationX > -10:
+            elif x - playerLocationX > 0:
+                pyautogui.keyUp('9')
+                eggLocations.pop(egg)
+            

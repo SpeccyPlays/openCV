@@ -1,7 +1,6 @@
 #automate opening of Fuse emulator and starting game
 #messy code
-#it'll find and walk to the egg on the same level
-#Switching to openCV though to follow a normal approach
+#it'll crudel find and walk to the egg on the same level then delete that egg from the list of eggs
 import pyautogui
 import cv2 as cv
 import time
@@ -53,17 +52,24 @@ for egg in eggLocations:
 #
 ###### MAIN PART of finding eggs####
 #Loop while there's eggs in the list
+print('Before egg collection : ', eggLocationsCenter)
+
 while len(eggLocationsCenter) > 0:
-    for egg in eggLocationsCenter:
+    eggLocationsCenter1 = eggLocationsCenter #have to do this
+    for index, egg in enumerate(eggLocationsCenter1):
         x, y = egg
         if playerLocationY < y + 50 and playerLocationY > y - 50:
-            if x - playerLocationX < 0:
+            if x < playerLocationX:
                 pyautogui.keyDown('9')
-                playerLocationX -= 32
+                playerLocationX -= 72
                 print('Egg X : ', x)
                 print('player X :', playerLocationX)
-            #elif x - playerLocationX < 10 and x - playerLocationX > -10:
-            elif x - playerLocationX > 0:
                 pyautogui.keyUp('9')
-                eggLocations.pop(egg)
+            #elif x - playerLocationX < 10 and x - playerLocationX > -10:
+            else:
+                pyautogui.keyUp('9')
+                del eggLocationsCenter[index]
+                print('after collecting ', eggLocationsCenter)
+                break
+    
             

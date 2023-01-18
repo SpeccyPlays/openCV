@@ -1,4 +1,6 @@
 ### Main file ###
+## Currently detecting all main elements of game and displaying in seperate window
+## This is to help check my code. Visualisation window can be removed in future
 import pyautogui
 import cv2 as cv
 import numpy as np
@@ -18,12 +20,19 @@ monitor_window_y = int(height/4)
 cv.namedWindow("Resized_frame", cv.WINDOW_NORMAL)
 cv.resizeWindow("Resized_frame", monitor_window_x, monitor_window_y)
 cv.moveWindow("Resized_frame", x + width, y)
+static_items_check = False
 while(1):
     img = pyautogui.screenshot(region=gameWindow)
     frame = np.array(img)
     #OpenCV is better at finding objects compared to pyautoGUI
     frame = locate_multiple_objects_cv('egg.PNG', frame)
+    frame = locate_multiple_objects_cv('chicken.PNG', frame)
     frame = locate_one_object_cv('player.PNG', frame)
+    if not static_items_check:
+        #only need to check static items once
+        frame = locate_multiple_objects_cv('ladder.PNG', frame)
+        frame = locate_multiple_objects_cv('brick.PNG', frame)
+        static_items_check = True
     # Convert BGR to HSV - only used if we want to isolate colours and display them
 #   hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     # define range of blue color in HSV

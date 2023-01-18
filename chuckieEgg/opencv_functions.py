@@ -26,8 +26,8 @@ def locate_multiple_objects_cv(filename, img):
 
 def loop_list_and_draw_rectangles(img, the_list):
     for item in the_list:
-        draw_rectangles(img, item)
+        draw_rectangle(img, item)
 
-def draw_rectangles(img, item_to_draw):
+def draw_rectangle(img, item_to_draw):
     top_left_x, top_left_y, width, height = item_to_draw
     cv.rectangle(img,(top_left_x, top_left_y),(top_left_x + width, top_left_y + height),(255,255,255),3)

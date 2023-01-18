@@ -24,7 +24,7 @@ while(1):
     #OpenCV is better at finding objects compared to pyautoGUI
     frame = locate_multiple_objects_cv('egg.PNG', frame)
     frame = locate_one_object_cv('player.PNG', frame)
-    # Convert BGR to HSV
+    # Convert BGR to HSV - only used if we want to isolate colours and display them
 #   hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     # define range of blue color in HSV
 #   lower_cyan = np.array([80,245,50])

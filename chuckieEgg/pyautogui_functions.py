@@ -37,3 +37,11 @@ def contestantsReady():
     pyautogui.keyUp('1')
     pyautogui.PAUSE = 0.5
     return fuseWindow
+
+def locate_one_object(filename, area):
+    #should return a tuple
+    return pyautogui.locateOnScreen(filename, region=area, confidence=0.9)
+
+def locate_multiple_objects(filename, area):
+    #should return a list of tuples
+    return list(pyautogui.locateAllOnScreen(filename, region=area, confidence=0.9))

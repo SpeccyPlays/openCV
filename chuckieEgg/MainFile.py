@@ -7,6 +7,13 @@ import numpy as np
 import time
 from pyautogui_functions import contestantsReady
 from opencv_functions import *
+from path_finding import *
+#Colours for bounding squares (reminder it's BGR colours used for openCV)
+yellow = (0, 255, 255)
+blue = (255, 0, 0)
+white = (255, 255, 255)
+pink = (153, 51, 255)
+green = (0, 255, 0)
 #start game and return tuple containing location of game window
 gameWindow = contestantsReady()
 #OpenCV is better at finding objects compared to pyautoGUI so these lines not included
@@ -24,15 +31,19 @@ static_items_check = False
 while(1):
     img = pyautogui.screenshot(region=gameWindow)
     frame = np.array(img)
+    frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
     #OpenCV is better at finding objects compared to pyautoGUI
-    frame = locate_multiple_objects_cv('egg.PNG', frame)
-    frame = locate_multiple_objects_cv('chicken.PNG', frame)
-    frame = locate_one_object_cv('player.PNG', frame)
+    frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, white)
+    frame, chickenl_locations = locate_multiple_objects_cv('chickenl.PNG', frame, blue)
+    frame, chuckenr_locations = locate_multiple_objects_cv('chickenr.PNG', frame, blue)
+    frame, player_location = locate_one_object_cv('player.PNG', frame, yellow)
     if not static_items_check:
         #only need to check static items once
-        frame = locate_multiple_objects_cv('ladder.PNG', frame)
-        frame = locate_multiple_objects_cv('brick.PNG', frame)
+        frame, whocares = locate_multiple_objects_cv('ladder.PNG', frame, pink)
+        frame, whocares = locate_multiple_objects_cv('brick.PNG', frame, green)
         static_items_check = True
+    frame, location = find_closest_item(frame, egg_locations, player_location, white)
+    print('Closest egg is ',  location)
     # Convert BGR to HSV - only used if we want to isolate colours and display them
 #   hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     # define range of blue color in HSV

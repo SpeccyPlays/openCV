@@ -5,6 +5,7 @@ import pyautogui
 import cv2 as cv
 import numpy as np
 import time
+from windowcapture import WindowCapture
 from pyautogui_functions import contestantsReady
 from opencv_functions import *
 from path_finding import *
@@ -16,22 +17,24 @@ pink = (153, 51, 255)
 green = (0, 255, 0)
 #start game and return tuple containing location of game window
 gameWindow = contestantsReady()
+wincap = WindowCapture('Fuse')
 #OpenCV is better at finding objects compared to pyautoGUI so these lines not included
 #egg_locations = locate_multiple_objects('egg.PNG', gameWindow)
 #playerLocation = locate_one_object('player.PNG', gameWindow)
 
 #set up our display window so it doesn't overlap with Fuse window
-x, y, width, height = gameWindow
-monitor_window_x = int(width/4)
-monitor_window_y = int(height/4)
-cv.namedWindow("Resized_frame", cv.WINDOW_NORMAL)
-cv.resizeWindow("Resized_frame", monitor_window_x, monitor_window_y)
-cv.moveWindow("Resized_frame", x + width, y)
+#x, y, width, height = gameWindow
+#monitor_window_x = int(width/4)
+#monitor_window_y = int(height/4)
+#cv.namedWindow("Resized_frame", cv.WINDOW_NORMAL)
+#cv.resizeWindow("Resized_frame", monitor_window_x, monitor_window_y)
+#cv.moveWindow("Resized_frame", x + width, y)
 static_items_check = False
 while(1):
-    img = pyautogui.screenshot(region=gameWindow)
-    frame = np.array(img)
-    frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
+    #img = pyautogui.screenshot(region=gameWindow)
+    #frame = np.array(img)
+    #frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
+    frame = wincap.get_screenshot()
     #OpenCV is better at finding objects compared to pyautoGUI
     frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, white)
     frame, chickenl_locations = locate_multiple_objects_cv('chickenl.PNG', frame, blue)

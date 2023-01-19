@@ -2,6 +2,7 @@
 import pyautogui
 import cv2 as cv
 import time
+from windowcapture import WindowCapture
 def contestantsReady():
 #pause 2.5 seconds between commands
     pyautogui.PAUSE = 0.5

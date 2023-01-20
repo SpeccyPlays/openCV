@@ -6,7 +6,7 @@ import time
 from windowcapture import WindowCapture
 from opencv_functions import *
 import win32gui, win32ui, win32con
-pyautogui.PAUSE = 0.1
+pyautogui.PAUSE = 0.5
 pyautogui.FAILSAFE = True
 #Colours for bounding squares (reminder it's BGR colours used for openCV)
 yellow = (0, 255, 255)

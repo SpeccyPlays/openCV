@@ -5,7 +5,7 @@ def locate_one_object_cv(filename, img, colour):
     img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     template = cv.imread(filename,0)
     w, h = template.shape[::-1]
-    res = cv.matchTemplate(img_gray,template,cv.TM_CCOEFF)
+    res = cv.matchTemplate(img_gray,template,cv.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
     top_left = max_loc
     bottom_right = (top_left[0] + w, top_left[1] + h)

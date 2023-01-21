@@ -27,9 +27,9 @@ class WindowCapture:
 
         # account for the window border and titlebar and cut them off
         border_pixels = 8
-        titlebar_pixels = 30
-        self.w = self.w - (border_pixels * 2)
-        self.h = self.h - titlebar_pixels - border_pixels
+        titlebar_pixels = 60
+        self.w = self.w - (border_pixels * 2) - 180
+        self.h = self.h - titlebar_pixels - border_pixels - 60
         self.cropped_x = border_pixels
         self.cropped_y = titlebar_pixels
 
@@ -93,6 +93,3 @@ class WindowCapture:
         return (pos[0] + self.offset_x, pos[1] + self.offset_y)
     def set_foreground_window(self):
         win32gui.SetForegroundWindow(self.hwnd)
-    def send_key_press(self, key):
-        print(ord(key))
-        win32gui.SendMessage(self.hwnd, win32con.WM_KEYDOWN, win32con.ord(key))

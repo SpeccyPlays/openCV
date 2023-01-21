@@ -2,7 +2,6 @@
 import pyautogui
 import cv2 as cv
 import numpy as np
-import time
 from windowcapture import WindowCapture
 from opencv_functions import *
 import win32gui, win32ui, win32con

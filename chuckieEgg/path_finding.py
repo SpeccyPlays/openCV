@@ -12,7 +12,7 @@ def put_objects_in_array(the_array, the_list, tile_size, number_for_array):
         the_array[y][x] = number_for_array
     return the_array
 
-def put_objects_in_array(the_array, the_list, tile_size):
+def remove_objects_from_array(the_array, the_list, tile_size):
     #Pass a list of x, y tuples and remove them in the array
     for object in the_list:
         x, y = object

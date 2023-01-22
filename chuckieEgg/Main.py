@@ -17,10 +17,8 @@ green = (0, 255, 0)
 wincap = WindowCapture('Fuse')
 cv.namedWindow("Resized_frame", cv.WINDOW_NORMAL)
 cv.resizeWindow("Resized_frame", 400, 300)
+wincap.set_foreground_window()
 while(1):
-    #img = pyautogui.screenshot(region=gameWindow)
-    #frame = np.array(img)
-    #frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
     frame = wincap.get_screenshot()
 
     cv.imshow("Resized_frame",frame)

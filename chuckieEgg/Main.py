@@ -60,6 +60,4 @@ while(1):
     cv.imshow("Resized_frame",frame)
     if check_should_exit():
         break
-    print(object_locations_array)
-
 cv.destroyAllWindows()

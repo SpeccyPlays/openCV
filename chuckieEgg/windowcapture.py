@@ -27,9 +27,9 @@ class WindowCapture:
 
         # account for the window border and titlebar and cut them off
         border_pixels = 8
-        titlebar_pixels = 32 #normally 30 but 60 removes Fuse menu bar
+        titlebar_pixels = 32 #normally 30 but 32 gives a nice size end resultr
         self.w = self.w - (border_pixels * 2)
-        self.h = self.h - titlebar_pixels - border_pixels - 40 #last value removes bottom bar
+        self.h = self.h - titlebar_pixels - border_pixels - 40 #last value removes Fuse bottom bar
         self.cropped_x = border_pixels
         self.cropped_y = titlebar_pixels
 

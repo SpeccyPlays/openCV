@@ -22,6 +22,7 @@ frame_height, frame_width = frame.shape[:2]
 cv.resizeWindow("Resized_frame", frame_width, frame_height)
 while(1):
     frame = wincap.get_screenshot()
+    #draw a grid to show 8x8 tile layout
     for i in range(0, frame_width, 16):
         frame = cv.line(frame, (i, 0), (i, frame_height), blue)
     for i in range(0, frame_height, 16):

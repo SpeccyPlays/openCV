@@ -5,7 +5,7 @@ def locate_one_object_cv(filename, img, colour):
     img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     template = cv.imread(filename,0)
     w, h = template.shape[::-1]
-    res = cv.matchTemplate(img_gray,template,cv.TM_CCOEFF)
+    res = cv.matchTemplate(img_gray,template,cv.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
     top_left = max_loc
     bottom_right = (top_left[0] + w, top_left[1] + h)
@@ -33,3 +33,11 @@ def loop_list_and_draw_rectangles(img, the_list):
 def draw_rectangle(img, item_to_draw):
     top_left_x, top_left_y, width, height = item_to_draw
     cv.rectangle(img,(top_left_x, top_left_y),(top_left_x + width, top_left_y + height),(255,255,255),3)
+
+def check_should_exit():
+    #Check to see if esc key has been preesed and we should exit
+    k = cv.waitKey(5) & 0xFF
+    if k == 27:
+        return True
+    else:
+        return False

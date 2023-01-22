@@ -25,7 +25,8 @@ cv.resizeWindow("Resized_frame", frame_width, frame_height)
 tile_size = 16
 tiles_wide = int(frame_width/tile_size)
 tiles_high = int(frame_height/tile_size)
-object_locations_array = [[0]*tiles_wide]*tiles_high
+object_locations_array = [[0 for i in range(tiles_wide)] for j in range(tiles_high)] #why are you like this python
+#object_locations_array = [[0]*tiles_wide]*tiles_high
 level_read = False
 frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, yellow)
 #Below will stay in the loop until eggs show - means the level has started
@@ -36,15 +37,15 @@ while not egg_locations:
     cv.imshow("Resized_frame",frame)
     if check_should_exit():
         break
+object_locations_array = put_objects_in_array(object_locations_array, egg_locations, tile_size, 1)
 while(1):
     frame = wincap.get_screenshot()
     if not level_read:
         #we only need to read these items once as they won't change
         frame, brick_locations = locate_multiple_objects_cv('brick.PNG', frame, green)
         frame, ladder_locations = locate_multiple_objects_cv('ladder.PNG', frame, pink)
-        object_locations_array = put_objects_in_array(object_locations_array, brick_locations, tile_size)
-        object_locations_array = put_objects_in_array(object_locations_array, ladder_locations, tile_size)
-        print(object_locations_array)
+        object_locations_array = put_objects_in_array(object_locations_array, brick_locations, tile_size, 2)
+        object_locations_array = put_objects_in_array(object_locations_array, ladder_locations, tile_size, 3)
         print('Level read')
         level_read = True
     frame, ladder_locations = locate_multiple_objects_cv('ladder.PNG', frame, pink)

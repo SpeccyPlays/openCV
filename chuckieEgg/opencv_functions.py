@@ -10,7 +10,10 @@ def locate_one_object_cv(filename, img, colour):
     top_left = max_loc
     bottom_right = (top_left[0] + w, top_left[1] + h)
     cv.rectangle(img,top_left, bottom_right, colour, 2)
-    return img, (top_left[0], top_left[1])
+    middle_x = top_left[0] + (w/2)
+    middle_y = top_left[1] + (h/2)
+    return img, (middle_x, middle_y )
+    #return img, (top_left[0], top_left[1])
 
 def locate_multiple_objects_cv(filename, img, colour):
     #copied off the docs page with minor edits

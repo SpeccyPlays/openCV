@@ -5,8 +5,6 @@ import cv2 as cv
 def put_objects_in_array(the_array, the_list, tile_size, number_for_array):
     for object in the_list:
         x, y = object
-        # as the location is top left corner have a small offset to make sure array location is clean
-        offset = int(tile_size/4)#maybe
         x = int(x/tile_size)
         y = int(y/tile_size)
         print('object : ', object, 'Array : ', x, ',', y)

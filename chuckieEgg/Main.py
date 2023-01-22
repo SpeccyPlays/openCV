@@ -51,7 +51,7 @@ while(1):
     frame, ladder_locations = locate_multiple_objects_cv('ladder.PNG', frame, pink)
     frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, white)
     frame, player_location = locate_multiple_objects_cv('player.PNG', frame, yellow)
-    #draw a grid to show 8x8 tile layout
+    #draw a grid to show tile layout
     for i in range(0, frame_width, tile_size):
         frame = cv.line(frame, (i, 0), (i, frame_height), blue)
     for i in range(0, frame_height, tile_size):

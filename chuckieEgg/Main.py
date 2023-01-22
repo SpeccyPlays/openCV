@@ -16,11 +16,16 @@ green = (0, 255, 0)
 #initialise windowcapture class
 wincap = WindowCapture('Fuse')
 cv.namedWindow("Resized_frame", cv.WINDOW_NORMAL)
-cv.resizeWindow("Resized_frame", 400, 300)
 wincap.set_foreground_window()
+frame = wincap.get_screenshot()
+frame_height, frame_width = frame.shape[:2]
+cv.resizeWindow("Resized_frame", frame_width, frame_height)
 while(1):
     frame = wincap.get_screenshot()
-
+    for i in range(0, frame_width, 16):
+        frame = cv.line(frame, (i, 0), (i, frame_height), blue)
+    for i in range(0, frame_height, 16):
+        frame = cv.line(frame, (0, i), (frame_width, i), blue)
     cv.imshow("Resized_frame",frame)
     k = cv.waitKey(5) & 0xFF
     if k == 27:

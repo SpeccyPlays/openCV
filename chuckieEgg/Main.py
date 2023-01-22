@@ -39,10 +39,15 @@ while not egg_locations:
 while(1):
     frame = wincap.get_screenshot()
     if not level_read:
+        #we only need to read these items once as they won't change
         frame, brick_locations = locate_multiple_objects_cv('brick.PNG', frame, green)
         frame, ladder_locations = locate_multiple_objects_cv('ladder.PNG', frame, pink)
+        object_locations_array = put_objects_in_array(object_locations_array, brick_locations, tile_size)
+        object_locations_array = put_objects_in_array(object_locations_array, ladder_locations, tile_size)
+        print(object_locations_array)
         print('Level read')
         level_read = True
+    frame, ladder_locations = locate_multiple_objects_cv('ladder.PNG', frame, pink)
     frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, white)
     frame, player_location = locate_multiple_objects_cv('player.PNG', frame, yellow)
     #draw a grid to show 8x8 tile layout

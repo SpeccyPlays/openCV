@@ -2,6 +2,16 @@
 #it should go through all items, calculate how far it is from the player
 #then use the weighting to find the nearest item
 import cv2 as cv
+def put_objects_in_array(the_array, the_list, tile_size):
+    for object in the_list:
+        x, y = object
+        # as the location is top left corner have a small offset to make sure array location is clean
+        offset = int(tile_size/4)#maybe
+        x = int(x/tile_size)
+        y = int(y/tile_size)
+        the_array[y][x] = 1
+    return the_array
+
 def find_closest_item(img, list_of_items, start_location, colour):
     closest_item = (0,0)
     start_x, start_y = start_location

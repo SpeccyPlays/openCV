@@ -17,8 +17,12 @@ green = (0, 255, 0)
 wincap = WindowCapture('Fuse')
 cv.namedWindow("Resized_frame", cv.WINDOW_NORMAL)
 cv.resizeWindow("Resized_frame", 300, 200)
+#game keys
 key_left = 'c'
 key_right = 'm'
+#use these for how much difference in the paddle movements
+min_offset = 2
+max_offset = 4
 wincap.set_foreground_window()
 while(1):
     frame = wincap.get_screenshot()
@@ -27,15 +31,23 @@ while(1):
     cv.imshow("Resized_frame",frame)
     ball_x, ball_y = ball_loc
     paddle_x, paddle_y = paddle_loc
-    #print ('Ball location : ', ball_x, ',', ball_y)
-    #print ('Paddle location : ', paddle_x, ',', paddle_y)
-    #Change the plus and minus value - lower means more twitchy but can get to the ball quick enough
-    if int(ball_x) > (int(paddle_x) + 5):
+    ball_x = int(ball_x) # we're going to be using this a lot so better to only convert to int once
+    paddle_x = int(paddle_x)
+    #if it's far from the paddle, hold the key down. If it's closer, a quick nudge across
+    if ball_x > (paddle_x + max_offset):
+        pyautogui.keyUp(key_left)#otherwise it's pressing both direction keys at once
+        pyautogui.keyDown(key_right)
+    elif ball_x > (paddle_x + min_offset) and (ball_x < paddle_x + max_offset):
         pyautogui.keyUp(key_left)
         pyautogui.keyDown(key_right)
-    if int(ball_x) < (int(paddle_x) - 5):
         pyautogui.keyUp(key_right)
-        pyautogui.keyDown(key_left)  
+    if ball_x < (paddle_x - max_offset):
+        pyautogui.keyUp(key_right)
+        pyautogui.keyDown(key_left)
+    elif  ball_x < (paddle_x + min_offset) and (ball_x > paddle_x - max_offset):
+        pyautogui.keyUp(key_right)
+        pyautogui.keyDown(key_left)
+        pyautogui.keyUp(key_left)
     k = cv.waitKey(5) & 0xFF
     if k == 27:#ESC key to break
         break

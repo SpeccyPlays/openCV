@@ -22,7 +22,8 @@ key_left = 'c'
 key_right = 'm'
 #use these for how much difference in the paddle movements
 min_offset = 2
-max_offset = 4
+max_offset = 8
+height_offset = 60
 wincap.set_foreground_window()
 while(1):
     frame = wincap.get_screenshot()
@@ -33,22 +34,21 @@ while(1):
     paddle_x, paddle_y = paddle_loc
     ball_x = int(ball_x) # we're going to be using this a lot so better to only convert to int once
     paddle_x = int(paddle_x)
-    #if it's far from the paddle, hold the key down. If it's closer, a quick nudge across
-    if ball_x > (paddle_x + max_offset):
+    #
+    #So the problem is the key needs to be held down so the paddle can build up speed
+    #for shallow angles it will quite often miss as it's not holding the key long enough to build speed
+    #
+    #I've tried to compensate
+    #
+    if ball_x > (paddle_x + max_offset) :
         pyautogui.keyUp(key_left)#otherwise it's pressing both direction keys at once
         pyautogui.keyDown(key_right)
-    elif ball_x > (paddle_x + min_offset) and (ball_x < paddle_x + max_offset):
-        pyautogui.keyUp(key_left)
-        pyautogui.keyDown(key_right)
-        pyautogui.keyUp(key_right)
-    if ball_x < (paddle_x - max_offset):
+    elif ball_x < (paddle_x - max_offset):
         pyautogui.keyUp(key_right)
         pyautogui.keyDown(key_left)
-    elif  ball_x < (paddle_x + min_offset) and (ball_x > paddle_x - max_offset):
-        pyautogui.keyUp(key_right)
-        pyautogui.keyDown(key_left)
-        pyautogui.keyUp(key_left)
     k = cv.waitKey(5) & 0xFF
     if k == 27:#ESC key to break
         break
+pyautogui.keyUp(key_right)
+pyautogui.keyUp(key_left)
 cv.destroyAllWindows()

@@ -25,7 +25,7 @@ cv.resizeWindow("Resized_frame", frame_width, frame_height)
 tile_size = 16
 tiles_wide = int(frame_width/tile_size)
 tiles_high = int(frame_height/tile_size)
-object_locations_array = [[0 for i in range(tiles_wide)] for j in range(tiles_high)] #why are you like this python
+level_map = [[0 for i in range(tiles_wide)] for j in range(tiles_high)] #why are you like this python
 #object_locations_array = [[0]*tiles_wide]*tiles_high
 level_read = False
 frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, yellow)
@@ -37,21 +37,32 @@ while not egg_locations:
     cv.imshow("Resized_frame",frame)
     if check_should_exit():
         break
-object_locations_array = put_objects_in_array(object_locations_array, egg_locations, tile_size, 1)
+level_map = put_objects_in_array(level_map, egg_locations, tile_size, 1)
 while(1):
     frame = wincap.get_screenshot()
     if not level_read:
         #we only need to read these items once as they won't change
         frame, brick_locations = locate_multiple_objects_cv('brick.PNG', frame, green)
         frame, ladder_locations = locate_multiple_objects_cv('ladder.PNG', frame, pink)
-        object_locations_array = put_objects_in_array(object_locations_array, brick_locations, tile_size, 2)
-        object_locations_array = put_objects_in_array(object_locations_array, ladder_locations, tile_size, 3)
-        for i in object_locations_array:
+        level_map = put_objects_in_array(level_map, brick_locations, tile_size, 2)
+        level_map = put_objects_in_array(level_map, ladder_locations, tile_size, 3)
+        for i in level_map:
             print(i)
         print('Level read')
         level_read = True
     frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, white)
-    frame, player_location = locate_multiple_objects_cv('player.PNG', frame, yellow)
+    frame, player_location = locate_multiple_objects_cv('player.png', frame, yellow)
+    #if we can't find the player facing right, check if he's facing right
+    if (player_location == []):
+        frame, player_location = locate_multiple_objects_cv('playerl.PNG', frame, yellow)
+    #print('Player location : ', player_location)
+    #as long as we can find the player, convert his x, y data to the level map array values
+    if (player_location != []):
+        player_map_x, player_map_y = player_location[0]
+        player_map_x = int(player_map_x/tile_size)
+        player_map_y = int(player_map_y/tile_size)
+        print('Player map x ', player_map_x)
+        print('Player map y ', player_map_y)
     #draw a grid to show tile layout
     for i in range(0, frame_width, tile_size):
         frame = cv.line(frame, (i, 0), (i, frame_height), blue)

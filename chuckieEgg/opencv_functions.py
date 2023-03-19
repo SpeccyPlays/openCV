@@ -9,7 +9,8 @@ def locate_one_object_cv(filename, img, colour):
     min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
     top_left = max_loc
     bottom_right = (top_left[0] + w, top_left[1] + h)
-    cv.rectangle(img,top_left, bottom_right, colour, 2)
+    #Uncomment the below to draw rectangle round the object found
+    #cv.rectangle(img,top_left, bottom_right, colour, 2)
     middle_x = top_left[0] + (w/2)
     middle_y = top_left[1] + (h/2)
     return img, (middle_x, middle_y )
@@ -24,9 +25,9 @@ def locate_multiple_objects_cv(filename, img, colour):
     threshold = 0.9
     loc = np.where( res >= threshold)
     locations = list(zip(*loc[::-1]))
-    #print(filename, ' There are', len(locations), 'locations ', locations)
-    for pt in zip(*loc[::-1]):
-        cv.rectangle(img, pt, (pt[0] + w, pt[1] + h), colour, 2)
+    #Uncomment the below to draw rectangles round the objects found
+    #for pt in zip(*loc[::-1]):
+        #cv.rectangle(img, pt, (pt[0] + w, pt[1] + h), colour, 2)
     return img, locations
 
 def loop_list_and_draw_rectangles(img, the_list):

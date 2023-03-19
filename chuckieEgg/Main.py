@@ -1,4 +1,5 @@
 ## Main
+##
 import pyautogui
 import cv2 as cv
 import numpy as np
@@ -52,7 +53,7 @@ while(1):
         level_read = True
     frame, egg_locations = locate_multiple_objects_cv('egg.PNG', frame, white)
     frame, player_location = locate_multiple_objects_cv('player.png', frame, yellow)
-    #if we can't find the player facing right, check if he's facing right
+    #if we can't find the player facing right, check if he's facing left
     if (player_location == []):
         frame, player_location = locate_multiple_objects_cv('playerl.PNG', frame, yellow)
     #print('Player location : ', player_location)
@@ -61,14 +62,28 @@ while(1):
         player_map_x, player_map_y = player_location[0]
         player_map_x = int(player_map_x/tile_size)
         player_map_y = int(player_map_y/tile_size)
-        print('Player map x ', player_map_x)
-        print('Player map y ', player_map_y)
-    #draw a grid to show tile layout
-    for i in range(0, frame_width, tile_size):
-        frame = cv.line(frame, (i, 0), (i, frame_height), blue)
-    for i in range(0, frame_height, tile_size):
-        frame = cv.line(frame, (0, i), (frame_width, i), blue)
+        player_map_y -= 2 #The player location is always 2 higher on the y axis so remove to account for this
+        frame = cv.putText(frame, "Player location : " + str(player_map_x) + "," + str(player_map_y) , (0, 50), 1, 1, pink)
+    #messy messy messy way of adding egg locations from the level map to the screen
+    count2 = 80
+    col_counter = 0
+    row_counter = 0
+    frame = cv.putText(frame, "Egg locations" , (0, count2 - 12), 1, 1, pink)
+    for col in level_map:
+        for row in level_map[col_counter]:
+            if row == 1 :
+                frame = cv.putText(frame, str(row_counter) + "," + str(col_counter) , (0, count2), 1, 1, pink)
+                count2 += 15
+            row_counter += 1
+        row_counter = 0
+        col_counter += 1
     cv.imshow("Resized_frame",frame)
+    #draw a grid to show tile layout
+    #for i in range(0, frame_width, tile_size):
+    #    frame = cv.line(frame, (i, 0), (i, frame_height), blue)
+    #for i in range(0, frame_height, tile_size):
+    #    frame = cv.line(frame, (0, i), (frame_width, i), blue)
+
     if check_should_exit():
         break
 cv.destroyAllWindows()

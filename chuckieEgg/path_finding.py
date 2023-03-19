@@ -21,7 +21,7 @@ def remove_objects_from_array(the_array, the_list, tile_size):
         the_array[y][x] = 0
     return the_array
 
-def find_closest_item(img, list_of_items, start_location, colour):
+def find_closest_item(img, the_array, start_location, colour):
     closest_item = (0,0)
     start_x, start_y = start_location
     for item in list_of_items:

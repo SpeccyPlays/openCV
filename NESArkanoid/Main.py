@@ -32,7 +32,7 @@ predicted_ball_x = 0
 predicted_ball_y = 0
 while(1):
     frame = wincap.get_screenshot()
-    frame, ball_loc = locate_one_object_cv('ball3.PNG', frame, white)
+    frame, ball_loc = locate_one_object_cv('ball5.PNG', frame, white)
     frame, paddle_loc = locate_one_object_cv('paddle2.PNG', frame, green)
     ball_x, ball_y = ball_loc
     paddle_x, paddle_y = paddle_loc
